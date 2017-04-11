@@ -1,0 +1,286 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "WellNet API gate for mobile apps"
+    },
+    "host": "staging.wellnet.tctdigital.xyz",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/api",
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "summary": "POST method for signup action",
+                "tags": [
+                    "Authorization"
+                ],
+                "description": "Creating a new one user for WellNet\n",
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": "Size of array",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RequestSignUpModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseSignUpModel"
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseErrorSignUpModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signin": {
+            "post": {
+                "summary": "POST method for login action",
+                "description": "Login to system\n",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Size of array",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ResponseSignUpModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/ReuaestLoginModel"
+                        }
+                    },
+                    "422": {
+                        "description": "Validateion Failed",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseErrorSignUpModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/valid": {
+            "post": {
+                "summary": "POST method for validation user credentials",
+                "tags": [
+                    "Authorization"
+                ],
+                "description": "Validation user by Bearer\n",
+                "responses": {
+                    "200": {
+                        "description": "Successfull response",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseSignUpModel"
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseErrorSignUpModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signout": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "POST method for logout",
+                "description": "Logout method \n",
+                "responses": {
+                    "200": {
+                        "description": "Successfull response",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseErrorSignUpModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/gyms": {
+            "post": {
+                "tags": [
+                    "Gyms"
+                ],
+                "summary": "get all fitness hals by location and radius",
+                "description": "POST method for fetching fitnes hals",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RequestGymsByCoord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "RequestGymsByCoord": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "number"
+                },
+                "radius": {
+                    "type": "integer"
+                },
+                "metadata": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "RequestSignUpModel": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "os": {
+                    "type": "string"
+                },
+                "push_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "ResponseSignUpModel": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                },
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string"
+                            },
+                            "first_name": {
+                                "type": "string"
+                            },
+                            "last_name": {
+                                "type": "string"
+                            },
+                            "mobile": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "api_token": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "ResponseErrorSignUpModel": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "success": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "ReuaestLoginModel": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "os": {
+                    "type": "string"
+                },
+                "push_token": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
